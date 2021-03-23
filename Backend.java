@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
 public class Backend extends RedBlackTree<Delivery>{
   java.util.Date date=new java.util.Date();
   RedBlackTree<Delivery> finalTree= new RedBlackTree<Delivery>();
@@ -62,6 +62,25 @@ public class Backend extends RedBlackTree<Delivery>{
     finalTree.insert(new Delivery(item, day, feeDelivery, location, delivery, null, now));
     return day;
   }
+  @Override
+  public String toString() {
+ // use the inorder Iterator that we get by calling the iterator method above
+    // to generate a string of all values of the tree in (ordered) in-order
+    // traversal sequence
+    Iterator<Delivery> treeNodeIterator = this.iterator();
+    StringBuffer sb = new StringBuffer();
+    sb.append("[ ");
+    if (treeNodeIterator.hasNext())
+        sb.append(treeNodeIterator.next());
+    while (treeNodeIterator.hasNext()) {
+        Delivery data = treeNodeIterator.next();
+        sb.append(", ");
+        sb.append(data.toString());
+    }
+    sb.append(" ]");
+    return sb.toString();
+}
+  
   /*Gets delivery based on itemname
    * @returns Delivery with ItemName
    * @param Item name to search for
