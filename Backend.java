@@ -7,6 +7,8 @@
 // Lecturer: <Gary Dahl>
 // Notes to Grader: <optional extra notes>
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,18 +20,16 @@ public class Backend extends RedBlackTree<Delivery>{
   java.util.Date date=new java.util.Date();
   RedBlackTree<Delivery> finalTree= new RedBlackTree<Delivery>();
   List<Delivery> dlist;
-  /*Constructor with file
-   */
-  public Backend (File file) {
-    List<Delivery> dlist =getDeliveryObjects(file);
-    for (int x=0;dlist.size()<x;x++) {
-      finalTree.insert(dlist.get(x));
-  }
-  }
-  /*Constructor with filepath
-  */
+  
   public Backend (String filepath) {
-    List<Delivery> dlist =getDeliveryObjects(filepath);
+    DataDeliveryReader read = new DataDeliveryReader();
+    Path newpath= null;
+     newpath.resolve(filepath);
+    List<Delivery> dlist= new ArrayList<Delivery>();
+    try {
+      dlist = read.getDeliveryObjects(newpath);
+    } catch (IOException | ParseException e) {
+    }
     for (int x=0;dlist.size()<x;x++) {
       date=new java.util.Date();
      dlist.get(x).setOrderDate(date);;
